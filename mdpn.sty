@@ -83,10 +83,10 @@
 
 % parameterized policy shortcuts
 \newcommand{\PolicyParams}{\ensuremath{\V{\theta}}}
-\newcommand{\PolicyA}[2]{\ensuremath{\Policy(#2 \vert #1, \PolicyParams)}} % order: s, a
-\newcommand{\PolicyB}[2]{\ensuremath{\Policy_{\PolicyParams}^{#1}(#2) }}
-\newcommand{\PolicyC}[2]{\ensuremath{\Policy_{\PolicyParams}^{#1,#2} }}
-\newcommand{\PolicyD}[2]{\ensuremath{\Policy(#1, #2, \PolicyParams) }}
+\newcommand{\ParamPolicyA}[2]{\ensuremath{\Policy(#2 \vert #1, \PolicyParams)}} % order: s, a
+\newcommand{\ParamPolicyB}[2]{\ensuremath{\Policy_{\PolicyParams}^{#1}(#2) }}
+\newcommand{\ParamPolicyC}[2]{\ensuremath{\Policy_{\PolicyParams}^{#1,#2} }}
+\newcommand{\ParamPolicyD}[2]{\ensuremath{\Policy(#1, #2, \PolicyParams) }}
 
 % Finally an MDP
 \newcommand{\MDP}{(\StateSpace, \ActionSpace, \RewardSet, \TransitionFunction, \RewardFunction, \InitialStates, \Discount)}
