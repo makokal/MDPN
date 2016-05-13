@@ -1,6 +1,7 @@
-# MDPN - Unified notation for Markov Decision Processes (MDPs)
+# MDPN 
+A Unified notation for Markov Decision Processes (MDPs)
 
-Building on the efforts of Philip Thomas in this [arXiv:1512.09075](http://arxiv.org/abs/1512.09075), this effort build a common Latex style for writing MDP related stuff. 
+Building on the efforts of Philip Thomas in this [arXiv:1512.09075](http://arxiv.org/abs/1512.09075), this effort build a common Latex style for writing PO(MDP) related texts for publication, teaching, etc. 
 
 ## Why?
 * Have a standard notation, to save everyone time (readers, writers) of anything related to MDPs and friends
@@ -13,7 +14,7 @@ Building on the efforts of Philip Thomas in this [arXiv:1512.09075](http://arxiv
 
 % In text
 MDP is given by $\MDP$, with $\StateSpace$ being the set of states.
-Let $\TransitionA{a}{a}{a}$ be the probability of transitioning from ....
+Let $\TransitionA{s}{a}{s'}$ be the probability of transitioning from ....
 
 % ...
 
@@ -25,5 +26,5 @@ See the example file for a concrete example. To compile the sample, simple run `
 Simply create an issue, open a pull request, fork away
 
 
-## Will this lead to [https://xkcd.com/927/](https://xkcd.com/927/)
+### But wont this lead to [https://xkcd.com/927/](https://xkcd.com/927/)?
 Hopefully not!
