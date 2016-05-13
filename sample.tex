@@ -1,0 +1,99 @@
+\documentclass[a4paper]{article}
+\pdfoutput=1
+
+\usepackage{palatino}
+\usepackage{geometry}
+\usepackage[round]{natbib}                      % For bibliography style
+\usepackage{hyperref}
+\usepackage{xcolor}
+\definecolor{dark-blue}{rgb}{0,0,0.7}
+\hypersetup{
+    colorlinks, linkcolor={dark-blue},
+    citecolor={dark-blue}, urlcolor={dark-blue}
+}
+
+\usepackage[acronym,smallcaps,nowarn,section,nonumberlist]{glossaries}
+\glsdisablehyper{}
+\newacronym{MDP}{mdp}{Markov decision process}
+\newacronym{RL}{rl}{Reinforcement learning}
+
+\usepackage{mdpn}   % Load the MDP notation style
+
+
+%----------------------------------------------------------------------------
+%   TITLE SECTION
+%----------------------------------------------------------------------------
+\author{Billy Okal\\\\
+University of Freiburg}
+
+\title{Example illustrating use of MDPNv1 notation}
+\date{}
+
+
+
+\begin{document}
+
+\maketitle
+
+
+\section{Introduction}
+\label{sec:intro}
+Many \gls{RL} research papers contain paragraphs that define \gls{MDP}.
+These paragraphs take up space that could otherwise be used to present more useful content.
+In this paper we specify a notation for MDPs that can be used by other papers. Declaring the use this notation using a single sentence can replace several paragraphs of notational specifications in other papers.
+Importantly, the notation that we define is a common foundation that appears in many RL papers, and is not meant to be a complete notation for an entire paper.
+
+\section{Markov Decision Process using MDPNv1 notation}
+\label{sec:mdps}
+Let a \gls{MDP} be a tuple, $\MDP$, where;
+%
+\begin{enumerate}
+    \item We use $\TimeStep$ to denote the time step, where $\NZ$ denotes the natural numbers {\em including zero}.
+
+    \item $\StateSpace$ is the set of possible states that the agent can be in, and is called the {\em state set}. The state of the environment at time $t$ is a random variable that we denote by $\StateT{t}$. We will typically use $\State$ to denote an element of the state set.
+
+    \item ...
+
+    \item $\TransitionFunctionFull$ is called the {\em transition function}. For all $(s,a,s',t) \in \StateSpace \times \ActionSpace \times \StateSpace \times \NZ$, let $\TransitionFunction(s,a,s')\coloneqq\Pr(\StateT{t+1}=s' | \StateT{t}=s, \ActionT{t}=a)$.
+    That is, $\TransitionFunction$ characterizes the distribution over states at time $t+1$ given the state and action at time $t$.
+
+    We allow three alternate notations for $\TransitionFunction$.
+    First, let $\TransitionA{s}{a}{s'} \coloneqq \TransitionFunction(s,a,s')$.
+    This form takes approximately the same amount of space, but makes it more clear that $\TransitionFunction$ is a conditional distribution over the next state given the current state and action.
+    Second, let $\TransitionB{s}{a}{s'} \coloneqq \TransitionFunction(s,a,s')$.
+    This notation moves terms into subscripts and superscripts in order to save some space.
+    Third, let $\TransitionC{s}{a}{s'} \coloneqq \TransitionFunction(s,a,s')$.
+    This final form is particularly useful when space is limited.
+    The author is should select one the four notations for $\TransitionFunction$, and remain consistent within each paper.
+
+    \item ...
+
+\end{enumerate}
+%
+And so on and so forth
+
+
+
+
+%-----------------------------------------------------------------------------
+%   REFERENCE LIST
+%-----------------------------------------------------------------------------
+
+\begin{thebibliography}{1}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Sutton and Barto(1998)]{SuttonBarto}
+R.~S. Sutton and A.~G. Barto.
+\newblock \emph{Reinforcement Learning: {A}n Introduction}.
+\newblock MIT Press, Cambridge, MA, 1998.
+
+\end{thebibliography}
+\bibliographystyle{abbrvnat}    % Uses author initials (requires abbrvnat.bst)
+
+%-----------------------------------------------------------------------------
+
+\end{document}

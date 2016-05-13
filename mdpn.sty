@@ -1,0 +1,92 @@
+% mdpn.sty
+%
+% Copyright 2016 by Billy Okal, Philip Thomas
+%
+% See the files LICENSE details.
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amstext}
+\usepackage{bm}
+\usepackage{mathrsfs}
+\usepackage{mathtools}  % for \coloneq
+
+% ********************************************************************
+% Variables (discrete and continuous), sets, operators
+% ********************************************************************
+\newcommand{\RV}[1]{\ensuremath{\textnormal{#1}}} % random variable
+\newcommand{\V}[1]{\text{\boldmath $#1$}}    % vector
+\newcommand{\M}[1]{\V{#1}}                   % Matrix
+\newcommand{\I}{\M{I}}                      % identity matrix
+\newcommand{\R}{\mathbb{R}}                 % set of real number
+\newcommand{\N}{\mathbb{N}}                 % set of natural numbers
+\newcommand{\NZ}{\mathbb{N}_{\geq 0}}       % set of natural numbers, > 0
+\newcommand{\C}{\mathbb{C}}                 % complex
+\newcommand{\Z}{\mathbb{Z}}                 % set of integers
+\newcommand{\E}{\mathbb{E}}                 % Expectation
+
+% ********************************************************************
+% Helper macros
+% ********************************************************************
+\newcommand{\MC}[1]{\mathcal{#1}}
+
+
+% ********************************************************************
+% MDP Notation
+% ********************************************************************
+\newcommand{\TimeStep}{\ensuremath{t \in \NZ}}       % time step
+
+\newcommand{\StateSpace}{\ensuremath{\MC{S}}}    % state space
+\newcommand{\State}{\ensuremath{s}}              % single state
+\newcommand{\StateT}[1]{\ensuremath{S_{#1}}}     % single state at time t
+
+\newcommand{\ActionSpace}{\ensuremath{\MC{A}}}   % action space
+\newcommand{\Action}{\ensuremath{a}}             % single state at time t
+\newcommand{\ActionT}[1]{\ensuremath{A_{#1}}}    % single state at time t
+
+% reward related
+\newcommand{\RewardSet}{\ensuremath{\MC{R}}}
+\newcommand{\RewardSetFull}{\ensuremath{\RewardSet \subsetq \R \cup \{-\infty, \infty\}}}  % set of possible rewards
+\newcommand{\Reward}{\ensuremath{r}}
+\newcommand{\Rmax}{\Reward_{\text{max}}}
+\newcommand{\Rmin}{\Reward_{\text{min}}}
+\newcommand{\RewardFunction}{\ensuremath{R}}
+\newcommand{\RewardR}[4]{\RewardFunction(#4 \vert #1,#2,#3)} %order: s,a,s',r
+\newcommand{\RewardSAS}[4]{\RewardFunction_{#1,#3}^{#2}(#4)}
+\newcommand{\RewardSASR}[4]{\RewardFunction_{#1,#3}^{#2,#4}}
+
+% transition related
+\newcommand{\TransitionFunctionFull}{\ensuremath{P:\StateSpace \times \ActionSpace \times \StateSpace \longmapsto [0,1]}}
+\newcommand{\TransitionFunction}{\ensuremath{P}}
+\newcommand{\TransitionA}[3]{\TransitionFunction(#3 \vert #1,#2)} % s,a,s'
+\newcommand{\TransitionB}[3]{\TransitionFunction_{#1}^{#2}(#3)}
+\newcommand{\TransitionC}[3]{\TransitionFunction_{#1,#3}^{#2}}
+
+% initial state distribution
+\newcommand{\InitialStates}{\ensuremath{d_0}}
+\newcommand{\InitialDistribution}{\ensuremath{\InitialStates : \StateSpace \longmapsto [0,1]}}
+
+% discount factor
+\newcommand{\Discount}{\ensuremath{\gamma}}
+\newcommand{\DiscountFunction}{\ensuremath{\Discount \in [0, 1]}}
+
+% policies
+\newcommand{\Policy}{\ensuremath{\pi}}
+\newcommand{\PolicyFunction}{\ensuremath{\Policy : \StateSpace \times \ActionSpace \longmapsto [0, 1] }}
+
+% policy shortcuts
+\newcommand{\PolicyA}[2]{\ensuremath{\Policy(#2 \vert #1)}} % order: s, a
+\newcommand{\PolicyB}[2]{\ensuremath{\Policy_{#1}(#2) }}
+\newcommand{\PolicyC}[2]{\ensuremath{\Policy_{#1}^{#2} }}
+\newcommand{\PolicyD}[2]{\ensuremath{\Policy(#1, #2) }}
+
+% parameterized policy shortcuts
+\newcommand{\PolicyParams}{\ensuremath{\V{\theta}}}
+\newcommand{\PolicyA}[2]{\ensuremath{\Policy(#2 \vert #1, \PolicyParams)}} % order: s, a
+\newcommand{\PolicyB}[2]{\ensuremath{\Policy_{\PolicyParams}^{#1}(#2) }}
+\newcommand{\PolicyC}[2]{\ensuremath{\Policy_{\PolicyParams}^{#1,#2} }}
+\newcommand{\PolicyD}[2]{\ensuremath{\Policy(#1, #2, \PolicyParams) }}
+
+% Finally an MDP
+\newcommand{\MDP}{(\StateSpace, \ActionSpace, \RewardSet, \TransitionFunction, \RewardFunction, \InitialStates, \Discount)}
