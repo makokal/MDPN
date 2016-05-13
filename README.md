@@ -1,7 +1,7 @@
 # MDPN 
 A Unified notation for Markov Decision Processes (MDPs)
 
-Building on the efforts of Philip Thomas in this [arXiv:1512.09075](http://arxiv.org/abs/1512.09075), this effort build a common Latex style for writing PO(MDP) related texts for publication, teaching, etc. 
+Building on the efforts of Philip Thomas in [arXiv:1512.09075](http://arxiv.org/abs/1512.09075), we build a common Latex style for writing PO(MDP) related texts for publication, teaching, etc. 
 
 ## Why?
 * Have a standard notation, to save everyone time (readers, writers) of anything related to MDPs and friends
