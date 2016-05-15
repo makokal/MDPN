@@ -69,7 +69,7 @@
 
 % discount factor
 \newcommand{\Discount}{\ensuremath{\gamma}}
-\newcommand{\DiscountFunction}{\ensuremath{\Discount \in [0, 1]}}
+\newcommand{\DiscountFunction}{\ensuremath{\Discount \in [0, 1)}}
 
 % policies
 \newcommand{\Policy}{\ensuremath{\pi}}
@@ -89,4 +89,4 @@
 \newcommand{\ParamPolicyD}[2]{\ensuremath{\Policy(#1, #2, \PolicyParams) }}
 
 % Finally an MDP
-\newcommand{\MDP}{(\StateSpace, \ActionSpace, \RewardSet, \TransitionFunction, \RewardFunction, \InitialStates, \Discount)}
+\newcommand{\MDP}{(\StateSpace, \ActionSpace, \TransitionFunction, \RewardSet, \RewardFunction, \InitialStates, \Discount)}
