@@ -1,9 +1,12 @@
 \documentclass[a4paper]{article}
 \pdfoutput=1
 
-\usepackage{palatino}
+\usepackage{libertine}
 \usepackage{geometry}
 \usepackage[round]{natbib}                      % For bibliography style
+\renewcommand{\sfdefault}{lmss}  % Computer Modern Sans
+\renewcommand{\bfdefault}{bx}
+
 \usepackage{hyperref}
 \usepackage{xcolor}
 \definecolor{dark-blue}{rgb}{0,0,0.7}
@@ -12,10 +15,17 @@
     citecolor={dark-blue}, urlcolor={dark-blue}
 }
 
+\usepackage{titlesec}
+\titleformat{\section}{\bfseries\sffamily\large\color{black}}{\thesection}{1em}{}
+\titleformat{\subsection}{\bfseries\sffamily\color{black}}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\bfseries\sffamily\color{black}}{\thesubsubsection}{0.4em}{}
+
 \usepackage[acronym,smallcaps,nowarn,section,nonumberlist]{glossaries}
 \glsdisablehyper{}
 \newacronym{MDP}{mdp}{Markov decision process}
 \newacronym{RL}{rl}{Reinforcement learning}
+%----------------------------------------------------------------------------
+
 
 \usepackage{mdpn}   % Load the MDP notation style
 
@@ -26,7 +36,7 @@
 \author{Billy Okal\\\\
 University of Freiburg}
 
-\title{Example illustrating use of MDPNv1 notation}
+\title{\bf \sffamily Example Usage of MDPNv1 Notation}
 \date{}
 
 
@@ -40,12 +50,12 @@ University of Freiburg}
 \label{sec:intro}
 Many \gls{RL} research papers contain paragraphs that define \gls{MDP}.
 These paragraphs take up space that could otherwise be used to present more useful content.
-In this paper we specify a notation for MDPs that can be used by other papers. Declaring the use this notation using a single sentence can replace several paragraphs of notational specifications in other papers.
-Importantly, the notation that we define is a common foundation that appears in many RL papers, and is not meant to be a complete notation for an entire paper.
+In this paper we specify a notation for \gls{MDP} that can be used by other papers. Declaring the use this notation using a single sentence can replace several paragraphs of notational specifications in other papers.
+Importantly, the notation that we define is a common foundation that appears in many \gls{RL} and related papers, and is not meant to be a complete notation for an entire paper.
 
-\section{Markov Decision Process using MDPNv1 notation}
+\section{MDPs using MDPNv1 notation}
 \label{sec:mdps}
-Let a \gls{MDP} be a tuple, $\MDP$, where;
+A \gls{MDP} is denoted by a tuple, $\MDP$, where;
 %
 \begin{enumerate}
     \item We use $\TimeStep$ to denote the time step, where $\NZ$ denotes the natural numbers {\em including zero}.
