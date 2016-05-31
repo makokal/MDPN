@@ -22,12 +22,17 @@
 
 \usepackage[acronym,smallcaps,nowarn,section,nonumberlist]{glossaries}
 \glsdisablehyper{}
+
+\usepackage{scalefnt,letltxmacro}
+\LetLtxMacro{\oldtextsc}{\textsc}
+\renewcommand{\textsc}[1]{\oldtextsc{\scalefont{1.10}#1}}
+
 \newacronym{MDP}{mdp}{Markov decision process}
 \newacronym{RL}{rl}{Reinforcement learning}
 %----------------------------------------------------------------------------
 
 
-\usepackage{mdpn}   % Load the MDP notation style
+\usepackage[alpha]{mdpn}   % Load the MDP notation style
 
 
 %----------------------------------------------------------------------------
@@ -48,8 +53,8 @@ University of Freiburg}
 
 \section{Introduction}
 \label{sec:intro}
-Many \gls{RL} research papers contain paragraphs that define \gls{MDP}.
-These paragraphs take up space that could otherwise be used to present more useful content.
+Many \gls{RL} research papers contain paragraphs that define \gls{MDP} and related concepts.
+These paragraphs take up space that could otherwise be used to present more useful/new content.
 In this paper we specify a notation for \gls{MDP} that can be used by other papers. Declaring the use this notation using a single sentence can replace several paragraphs of notational specifications in other papers.
 Importantly, the notation that we define is a common foundation that appears in many \gls{RL} and related papers, and is not meant to be a complete notation for an entire paper.
 
@@ -58,31 +63,39 @@ Importantly, the notation that we define is a common foundation that appears in 
 A \gls{MDP} is denoted by a tuple, $\MDP$, where;
 %
 \begin{enumerate}
-    \item We use $\TimeStep$ to denote the time step, where $\NZ$ denotes the natural numbers {\em including zero}.
+    \item We use $\step$ to denotes the time step, where $\NZ$ denotes the natural numbers {\em including zero}.
 
-    \item $\StateSpace$ is the set of possible states that the agent can be in, and is called the {\em state set}. The state of the environment at time $t$ is a random variable that we denote by $\StateT{t}$. We will typically use $\State$ to denote an element of the state set.
+    \item $\sset$ is the set of possible states that the agent can be in, and is called the {\em state set}. The state of the environment at time $t$ is a random variable that we denote by $\st{t}$. We will typically use $s$ to denote an element of the state set. $\Pol$
+
+    \item Similarly, $\aset$ is the set of possible actions the agent can perform. The action at time $t$ is denoted by $\at{t}$, while $a$ denotes an element of the action set.
 
     \item ...
 
-    \item $\TransitionFunctionFull$ is called the {\em transition function}. For all $(s,a,s',t) \in \StateSpace \times \ActionSpace \times \StateSpace \times \NZ$, let $\TransitionFunction(s,a,s')\coloneqq\Pr(\StateT{t+1}=s' | \StateT{t}=s, \ActionT{t}=a)$.
-    That is, $\TransitionFunction$ characterizes the distribution over states at time $t+1$ given the state and action at time $t$.
+    \item $\Tdef$ is called the {\em transition function}. For all $(s,a,s',t) \in \sset \times \aset \times \sset \times \NZ$, let $\T(s,a,s')\coloneqq\Pr(\st{t+1}=s' | \st{t}=s, \ActionT{t}=a)$.
+    That is, $\T$ characterizes the distribution over states at time $t+1$ given the state and action at time $t$.
 
-    We allow three alternate notations for $\TransitionFunction$.
-    First, let $\TransitionA{s}{a}{s'} \coloneqq \TransitionFunction(s,a,s')$.
-    This form takes approximately the same amount of space, but makes it more clear that $\TransitionFunction$ is a conditional distribution over the next state given the current state and action.
-    Second, let $\TransitionB{s}{a}{s'} \coloneqq \TransitionFunction(s,a,s')$.
+    We allow three alternate notations for $\T$.
+    First, let $\TransitionA{s}{a}{s'} \coloneqq \T(s,a,s')$.
+    This form takes approximately the same amount of space, but makes it more clear that $\T$ is a conditional distribution over the next state given the current state and action.
+    Second, let $\TransitionB{s}{a}{s'} \coloneqq \T(s,a,s')$.
     This notation moves terms into subscripts and superscripts in order to save some space.
-    Third, let $\TransitionC{s}{a}{s'} \coloneqq \TransitionFunction(s,a,s')$.
+    Third, let $\TransitionC{s}{a}{s'} \coloneqq \T(s,a,s')$.
     This final form is particularly useful when space is limited.
-    The author is should select one the four notations for $\TransitionFunction$, and remain consistent within each paper.
+    The author is should select one the four notations for $\T$, and remain consistent within each paper.
 
-    \item ...
+    \item $\isset$ is the initial distribution of states defined as $\issetdef$.
+    \item $\D$ is the discount factor defined as $\Ddef$.
+
+    \item $\pol$ is the policy which is defined as $\poldef$
 
 \end{enumerate}
 %
 And so on and so forth
 
 
+\section{Acknowledgments}
+\label{sec:thanks}
+I want to thank Phillip Thomas for fruitful discussions on the naming and contents of this package.
 
 
 %-----------------------------------------------------------------------------

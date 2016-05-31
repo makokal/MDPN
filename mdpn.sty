@@ -4,89 +4,93 @@
 %
 % See the files LICENSE details.
 
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsfonts}
-\usepackage{amstext}
-\usepackage{bm}
-\usepackage{mathrsfs}
-\usepackage{mathtools}  % for \coloneq
+
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesClass{mdpn}[2016/05/31 v1.0]
+
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{amsfonts}
+\RequirePackage{amstext}
+\RequirePackage{bm}
+\RequirePackage{mathrsfs}
+\RequirePackage{mathtools}  % for \coloneq
+
+% options for selecting notation mode
+\let\if@alpha\iffalse
+\DeclareOption{alpha}{\let\if@alpha\iftrue}
+
+\let\if@beta\iftrue
+\DeclareOption{beta}{\let\if@beta\iffalse}
+
+\ProcessOptions
+
+\if@alpha
+    \newcommand{MDP}{x,y, z}
+
+\if@beta
+    \newcommand{MDP}{a, b, c}
+
 
 % ********************************************************************
 % Variables (discrete and continuous), sets, operators
 % ********************************************************************
-\newcommand{\RV}[1]{\ensuremath{\textnormal{#1}}} % random variable
-\newcommand{\V}[1]{\text{\boldmath $#1$}}    % vector
-\newcommand{\M}[1]{\V{#1}}                   % Matrix
-\newcommand{\I}{\M{I}}                      % identity matrix
-\newcommand{\R}{\mathbb{R}}                 % set of real number
-\newcommand{\N}{\mathbb{N}}                 % set of natural numbers
-\newcommand{\NZ}{\mathbb{N}_{\geq 0}}       % set of natural numbers, > 0
-\newcommand{\C}{\mathbb{C}}                 % complex
-\newcommand{\Z}{\mathbb{Z}}                 % set of integers
-\newcommand{\E}{\mathbb{E}}                 % Expectation
-
-% ********************************************************************
-% Helper macros
-% ********************************************************************
-\newcommand{\MC}[1]{\mathcal{#1}}
+\newcommand{\N}{\mathbb{N}}         % set of natural numbers
+\newcommand{\NZ}{\N_{\geq 0}}       % set of natural numbers, > 0
 
 
 % ********************************************************************
 % MDP Notation
 % ********************************************************************
-\newcommand{\TimeStep}{\ensuremath{t \in \NZ}}       % time step
+\newcommand{\step}{\ensuremath{t \in \NZ}}       % time step
 
-\newcommand{\StateSpace}{\ensuremath{\MC{S}}}    % state space
-\newcommand{\State}{\ensuremath{s}}              % single state
-\newcommand{\StateT}[1]{\ensuremath{S_{#1}}}     % single state at time t
-
-\newcommand{\ActionSpace}{\ensuremath{\MC{A}}}   % action space
-\newcommand{\Action}{\ensuremath{a}}             % single state at time t
-\newcommand{\ActionT}[1]{\ensuremath{A_{#1}}}    % single state at time t
+% state and action sets
+\newcommand{\sset}{\ensuremath{\mathcal{S}}}    % state space
+\newcommand{\st}[1]{\ensuremath{S_{#1}}}     % single state at time t
+\newcommand{\aset}{\ensuremath{\mathcal{A}}}   % action space
+\newcommand{\at}[1]{\ensuremath{A_{#1}}}    % single state at time t
 
 % reward related
-\newcommand{\RewardSet}{\ensuremath{\MC{R}}}
-\newcommand{\RewardSetFull}{\ensuremath{\RewardSet \subsetq \R \cup \{-\infty, \infty\}}}  % set of possible rewards
-\newcommand{\Reward}{\ensuremath{r}}
-\newcommand{\Rmax}{\Reward_{\text{max}}}
-\newcommand{\Rmin}{\Reward_{\text{min}}}
-\newcommand{\RewardFunction}{\ensuremath{R}}
-\newcommand{\RewardR}[4]{\RewardFunction(#4 \vert #1,#2,#3)} %order: s,a,s',r
-\newcommand{\RewardSAS}[4]{\RewardFunction_{#1,#3}^{#2}(#4)}
-\newcommand{\RewardSASR}[4]{\RewardFunction_{#1,#3}^{#2,#4}}
+\newcommand{\rset}{\ensuremath{\mathcal{R}}}
+\newcommand{\rsetdef}{\ensuremath{\rset \subsetq \mathbb{R} \cup \{-\infty, \infty\}}}  % set of possible rewards
+\newcommand{\rmax}{\r_{\text{max}}}
+\newcommand{\rmin}{\r_{\text{min}}}
+\newcommand{\R}{\ensuremath{R}}
+\newcommand{\RewardR}[4]{\R(#4 \vert #1,#2,#3)} %order: s,a,s',r
+\newcommand{\RewardSAS}[4]{\R_{#1,#3}^{#2}(#4)}
+\newcommand{\RewardSASR}[4]{\R_{#1,#3}^{#2,#4}}
 
 % transition related
-\newcommand{\TransitionFunctionFull}{\ensuremath{P:\StateSpace \times \ActionSpace \times \StateSpace \longmapsto [0,1]}}
-\newcommand{\TransitionFunction}{\ensuremath{P}}
-\newcommand{\TransitionA}[3]{\TransitionFunction(#3 \vert #1,#2)} % s,a,s'
-\newcommand{\TransitionB}[3]{\TransitionFunction_{#1}^{#2}(#3)}
-\newcommand{\TransitionC}[3]{\TransitionFunction_{#1,#3}^{#2}}
+\newcommand{\Tdef}{\ensuremath{P:\sset \times \aset \times \sset \longmapsto [0,1]}}
+\newcommand{\T}{\ensuremath{P}}
+\newcommand{\TransitionA}[3]{\T(#3 \vert #1,#2)} % s,a,s'
+\newcommand{\TransitionB}[3]{\T_{#1}^{#2}(#3)}
+\newcommand{\TransitionC}[3]{\T_{#1,#3}^{#2}}
 
 % initial state distribution
-\newcommand{\InitialStates}{\ensuremath{d_0}}
-\newcommand{\InitialDistribution}{\ensuremath{\InitialStates : \StateSpace \longmapsto [0,1]}}
+\newcommand{\isset}{\ensuremath{d_0}}
+\newcommand{\issetdef}{\ensuremath{\isset : \sset \longmapsto [0,1]}}
 
 % discount factor
-\newcommand{\Discount}{\ensuremath{\gamma}}
-\newcommand{\DiscountFunction}{\ensuremath{\Discount \in [0, 1)}}
+\newcommand{\D}{\ensuremath{\gamma}}
+\newcommand{\Ddef}{\ensuremath{\D \in [0, 1)}}
 
 % policies
-\newcommand{\Policy}{\ensuremath{\pi}}
-\newcommand{\PolicyFunction}{\ensuremath{\Policy : \StateSpace \times \ActionSpace \longmapsto [0, 1] }}
+\newcommand{\pol}{\ensuremath{\pi}}
+\newcommand{\poldef}{\ensuremath{\pol : \sset \times \aset \longmapsto [0, 1] }}
 
-% policy shortcuts
-\newcommand{\PolicyA}[2]{\ensuremath{\Policy(#2 \vert #1)}} % order: s, a
-\newcommand{\PolicyB}[2]{\ensuremath{\Policy_{#1}(#2) }}
-\newcommand{\PolicyC}[2]{\ensuremath{\Policy_{#1}^{#2} }}
-\newcommand{\PolicyD}[2]{\ensuremath{\Policy(#1, #2) }}
+% pol shortcuts
+\newcommand{\polA}[2]{\ensuremath{\pol(#2 \vert #1)}} % order: s, a
+\newcommand{\polB}[2]{\ensuremath{\pol_{#1}(#2) }}
+\newcommand{\polC}[2]{\ensuremath{\pol_{#1}^{#2} }}
+\newcommand{\polD}[2]{\ensuremath{\pol(#1, #2) }}
 
-% parameterized policy shortcuts
-\newcommand{\PolicyParams}{\ensuremath{\V{\theta}}}
-\newcommand{\ParamPolicyA}[2]{\ensuremath{\Policy(#2 \vert #1, \PolicyParams)}} % order: s, a
-\newcommand{\ParamPolicyB}[2]{\ensuremath{\Policy_{\PolicyParams}^{#1}(#2) }}
-\newcommand{\ParamPolicyC}[2]{\ensuremath{\Policy_{\PolicyParams}^{#1,#2} }}
-\newcommand{\ParamPolicyD}[2]{\ensuremath{\Policy(#1, #2, \PolicyParams) }}
+% parameterized pol shortcuts
+\newcommand{\pparams}{\ensuremath{\V{\theta}}}
+\newcommand{\ppolA}[2]{\ensuremath{\pol(#2 \vert #1, \pparams)}} % order:s, a
+\newcommand{\ppolB}[2]{\ensuremath{\pol_{\pparams}^{#1}(#2) }}
+\newcommand{\ppolC}[2]{\ensuremath{\pol_{\pparams}^{#1,#2} }}
+\newcommand{\ppolD}[2]{\ensuremath{\pol(#1, #2, \pparams) }}
 
 % Finally an MDP
-\newcommand{\MDP}{(\StateSpace, \ActionSpace, \TransitionFunction, \RewardSet, \RewardFunction, \InitialStates, \Discount)}
+\newcommand{\MDP}{(\sset, \aset, \T, \rset, \R, \isset, \D)}
