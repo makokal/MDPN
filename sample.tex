@@ -1,24 +1,49 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper, 11pt]{article}
 \pdfoutput=1
 
-\usepackage{libertine}
+% \usepackage{libertine}
+\usepackage{tgtermes}
 \usepackage{geometry}
 \usepackage[round]{natbib}                      % For bibliography style
 \renewcommand{\sfdefault}{lmss}  % Computer Modern Sans
 \renewcommand{\bfdefault}{bx}
+% \renewcommand{\ttdefault}{ccr}
 
 \usepackage{hyperref}
 \usepackage{xcolor}
-\definecolor{dark-blue}{rgb}{0,0,0.7}
-\hypersetup{
-    colorlinks, linkcolor={dark-blue},
-    citecolor={dark-blue}, urlcolor={dark-blue}
+\usepackage{natbib}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.85,0.85,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize\ttfamily,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
 }
+\lstset{style=mystyle}
 
 \usepackage{titlesec}
-\titleformat{\section}{\bfseries\sffamily\large\color{black}}{\thesection}{1em}{}
-\titleformat{\subsection}{\bfseries\sffamily\color{black}}{\thesubsection}{0.5em}{}
-\titleformat{\subsubsection}{\bfseries\sffamily\color{black}}{\thesubsubsection}{0.4em}{}
+\titleformat{\section}{\bfseries\sffamily\large}{\thesection}{1em}{}
+\titleformat{\subsection}{\bfseries\sffamily}{\thesubsection}{0.5em}{}
+\titleformat{\subsubsection}{\bfseries\sffamily}{\thesubsubsection}{0.4em}{}
 
 \usepackage[acronym,smallcaps,nowarn,section,nonumberlist]{glossaries}
 \glsdisablehyper{}
@@ -53,14 +78,23 @@ University of Freiburg}
 
 \section{Introduction}
 \label{sec:intro}
-Many \gls{RL} research papers contain paragraphs that define \gls{MDP} and related concepts.
+Many \gls{RL} research papers contain paragraphs that define \gls{MDP} and related concepts~\cite[see][for detailed exposition]{SuttonBarto}.
 These paragraphs take up space that could otherwise be used to present more useful/new content.
-In this paper we specify a notation for \gls{MDP} that can be used by other papers. Declaring the use this notation using a single sentence can replace several paragraphs of notational specifications in other papers.
-Importantly, the notation that we define is a common foundation that appears in many \gls{RL} and related papers, and is not meant to be a complete notation for an entire paper.
+In this paper we demonstrate a package implementing a recently proposed notation\footnote{\url{http://arxiv.org/abs/1512.09075}} for \gls{MDP} that can be used as common foundation. Declaring the use this notation using a single sentence can replace several paragraphs of notational specifications in other papers.
 
 \section{MDPs using MDPNv1 notation}
 \label{sec:mdps}
-A \gls{MDP} is denoted by a tuple, $\MDP$, where;
+
+Include the package using notation options of: {\tt alpha, beta, kappa}.
+\begin{lstlisting}[language=Tex]
+    % ...
+    \usepackage[alpha]{mdpn}  % Most verbose
+    %\usepackage[beta]{mdpn}  % Compressed
+    %\usepackage[kappa]{mdpn}  % Most compressed
+    % ...
+\end{lstlisting}
+
+The \gls{MDP} is then denoted by a tuple, $\MDP$, where;
 %
 \begin{enumerate}
     \item We use $\step$ to denotes the time step, where $\NZ$ denotes the natural numbers {\em including zero}.
@@ -69,28 +103,30 @@ A \gls{MDP} is denoted by a tuple, $\MDP$, where;
 
     \item Similarly, $\aset$ is the set of possible actions the agent can perform. The action at time $t$ is denoted by $\at{t}$, while $a$ denotes an element of the action set.
 
-    \item ...
+    \item $\rset$ is the set of possible rewards, defined as $\rsetdef$. Additionally, instantaneous reward at time $t$ is $\Rfun_t$. Elements of the reward set are denoted by $r$ while the infimum and supremum are $\rmin$ and $\rmax$ respectively.
 
-    \item $\Tdef$ is called the {\em transition function}. For all $(s,a,s',t) \in \sset \times \aset \times \sset \times \NZ$, let $\T(s,a,s')\coloneqq\Pr(\st{t+1}=s' | \st{t}=s, \ActionT{t}=a)$.
-    That is, $\T$ characterizes the distribution over states at time $t+1$ given the state and action at time $t$.
-
-    We allow three alternate notations for $\T$.
-    First, let $\TransitionA{s}{a}{s'} \coloneqq \T(s,a,s')$.
-    This form takes approximately the same amount of space, but makes it more clear that $\T$ is a conditional distribution over the next state given the current state and action.
-    Second, let $\TransitionB{s}{a}{s'} \coloneqq \T(s,a,s')$.
+    \item $\Tdef$ is called the {\em transition function}. For all $(s,a,s',t) \in \sset \times \aset \times \sset \times \NZ$, let $\Tfun(s,a,s')\coloneqq\Pr(\st{t+1}=s' \mid \st{t}=s, \ActionT{t}=a)$.
+    That is, $\Tfun$ characterizes the distribution over states at time $t+1$ given the state and action at time $t$.
+    We allow three alternate notations for $\Tfun$.
+    \begin{enumerate}
+        \item {\tt alpha}: $\T{s}{a}{s'} \coloneqq \Tfun(s,a,s')$.
+    This form takes approximately the same amount of space, but makes it more clear that $\Tfun$ is a conditional distribution over the next state given the current state and action.
+        \item {\tt beta}: $\Tfun_{s}^{a}(s') \coloneqq \Tfun(s,a,s')$.
     This notation moves terms into subscripts and superscripts in order to save some space.
-    Third, let $\TransitionC{s}{a}{s'} \coloneqq \T(s,a,s')$.
+        \item {\tt kappa}: $\Tfun_{s,s'}^{a}} \coloneqq \Tfun(s,a,s')$.
     This final form is particularly useful when space is limited.
-    The author is should select one the four notations for $\T$, and remain consistent within each paper.
+    \end{enumerate}
+    Once the author selects one the three notations modes, consistent within each paper is ensured automatically.
+
+    \item The reward function is denoted by $\Rfun$, and so on with three options provided.
 
     \item $\isset$ is the initial distribution of states defined as $\issetdef$.
     \item $\D$ is the discount factor defined as $\Ddef$.
 
-    \item $\pol$ is the policy which is defined as $\poldef$
-
 \end{enumerate}
 %
-And so on and so forth
+
+Further, $\pol$ is the policy which is defined as $\poldef$ ...
 
 
 \section{Acknowledgments}

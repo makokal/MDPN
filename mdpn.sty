@@ -4,32 +4,14 @@
 %
 % See the files LICENSE details.
 
-
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{mdpn}[2016/05/31 v1.0]
+\ProvidesClass{mdpn}[2016/05/31 MDP Notation v1.0]
 
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
-\RequirePackage{amsfonts}
-\RequirePackage{amstext}
 \RequirePackage{bm}
 \RequirePackage{mathrsfs}
 \RequirePackage{mathtools}  % for \coloneq
-
-% options for selecting notation mode
-\let\if@alpha\iffalse
-\DeclareOption{alpha}{\let\if@alpha\iftrue}
-
-\let\if@beta\iftrue
-\DeclareOption{beta}{\let\if@beta\iffalse}
-
-\ProcessOptions
-
-\if@alpha
-    \newcommand{MDP}{x,y, z}
-
-\if@beta
-    \newcommand{MDP}{a, b, c}
 
 
 % ********************************************************************
@@ -52,20 +34,14 @@
 
 % reward related
 \newcommand{\rset}{\ensuremath{\mathcal{R}}}
-\newcommand{\rsetdef}{\ensuremath{\rset \subsetq \mathbb{R} \cup \{-\infty, \infty\}}}  % set of possible rewards
-\newcommand{\rmax}{\r_{\text{max}}}
-\newcommand{\rmin}{\r_{\text{min}}}
-\newcommand{\R}{\ensuremath{R}}
-\newcommand{\RewardR}[4]{\R(#4 \vert #1,#2,#3)} %order: s,a,s',r
-\newcommand{\RewardSAS}[4]{\R_{#1,#3}^{#2}(#4)}
-\newcommand{\RewardSASR}[4]{\R_{#1,#3}^{#2,#4}}
+\newcommand{\rsetdef}{\ensuremath{\rset \subseteq \mathbb{R} \cup \{-\infty, \infty\}}}  % set of possible rewards
+\newcommand{\rmax}{r_{\text{max}}}
+\newcommand{\rmin}{r_{\text{min}}}
+\newcommand{\Rfun}{\ensuremath{R}}
 
-% transition related
+% T related
 \newcommand{\Tdef}{\ensuremath{P:\sset \times \aset \times \sset \longmapsto [0,1]}}
-\newcommand{\T}{\ensuremath{P}}
-\newcommand{\TransitionA}[3]{\T(#3 \vert #1,#2)} % s,a,s'
-\newcommand{\TransitionB}[3]{\T_{#1}^{#2}(#3)}
-\newcommand{\TransitionC}[3]{\T_{#1,#3}^{#2}}
+\newcommand{\Tfun}{\ensuremath{P}}
 
 % initial state distribution
 \newcommand{\isset}{\ensuremath{d_0}}
@@ -77,20 +53,34 @@
 
 % policies
 \newcommand{\pol}{\ensuremath{\pi}}
-\newcommand{\poldef}{\ensuremath{\pol : \sset \times \aset \longmapsto [0, 1] }}
+\newcommand{\poldef}{\ensuremath{\pol : \sset \times \aset \longmapsto [0, 1]}}
+\newcommand{\pparams}{\ensuremath{\V{\theta}}} % policy parameters
 
-% pol shortcuts
-\newcommand{\polA}[2]{\ensuremath{\pol(#2 \vert #1)}} % order: s, a
-\newcommand{\polB}[2]{\ensuremath{\pol_{#1}(#2) }}
-\newcommand{\polC}[2]{\ensuremath{\pol_{#1}^{#2} }}
-\newcommand{\polD}[2]{\ensuremath{\pol(#1, #2) }}
+% Finally the MDP
+\newcommand{\MDP}{(\sset, \aset, \Tfun, \rset, \Rfun, \isset, \D)}
 
-% parameterized pol shortcuts
-\newcommand{\pparams}{\ensuremath{\V{\theta}}}
-\newcommand{\ppolA}[2]{\ensuremath{\pol(#2 \vert #1, \pparams)}} % order:s, a
-\newcommand{\ppolB}[2]{\ensuremath{\pol_{\pparams}^{#1}(#2) }}
-\newcommand{\ppolC}[2]{\ensuremath{\pol_{\pparams}^{#1,#2} }}
-\newcommand{\ppolD}[2]{\ensuremath{\pol(#1, #2, \pparams) }}
 
-% Finally an MDP
-\newcommand{\MDP}{(\sset, \aset, \T, \rset, \R, \isset, \D)}
+% notation depending on passed options
+\DeclareOption{alpha}{
+    \newcommand{\R}[4]{\Rfun(#4 \mid #1,#2,#3)} %order: s,a,s',r
+    \newcommand{\T}[3]{\Tfun(#3 \mid #1,#2)} % order s,a,s'
+    \newcommand{\pol}[2]{\ensuremath{\pol(#2 \mid #1)}} % order: s, a
+    \newcommand{\ppol}[2]{\ensuremath{\pol(#2 \mid #1, \pparams)}}
+}
+
+\DeclareOption{beta}{
+    \newcommand{\R}[4]{\Rfun_{#1,#3}^{#2}(#4)} %order: s,a,s',r
+    \newcommand{\T}[3]{\Tfun_{#1}^{#2}(#3)}
+    \newcommand{\pol}[2]{\ensuremath{\pol_{#1}(#2) }}
+    \newcommand{\ppol}[2]{\ensuremath{\pol_{\pparams}^{#1}(#2) }}
+}
+
+\DeclareOption{kappa}{
+    \newcommand{\R}[4]{\Rfun_{#1,#3}^{#2,#4}}
+    \newcommand{\T}[3]{\Tfun_{#1,#3}^{#2}}
+    \newcommand{\pol}[2]{\ensuremath{\pol_{#1}^{#2} }}
+    \newcommand{\ppol}[2]{\ensuremath{\pol_{\pparams}^{#1,#2} }}
+}
+
+\ProcessOptions\relax
+% done loading the options
