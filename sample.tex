@@ -94,18 +94,18 @@ Include the package using notation options of: {\tt alpha, beta, kappa}.
     % ...
 \end{lstlisting}
 
-The \gls{MDP} is then denoted by a tuple, $\MDP$, where;
+The \gls{MDP} is then denoted by a tuple, $\MDP$, $\p$where;
 %
 \begin{enumerate}
     \item We use $\step$ to denotes the time step, where $\NZ$ denotes the natural numbers {\em including zero}.
 
-    \item $\sset$ is the set of possible states that the agent can be in, and is called the {\em state set}. The state of the environment at time $t$ is a random variable that we denote by $\st{t}$. We will typically use $s$ to denote an element of the state set. $\Pol$
+    \item $\sset$ is the set of possible states that the agent can be in, and is called the {\em state set}. The state of the environment at time $t$ is a random variable that we denote by $\st{t}$. We will typically use $s$ to denote an element of the state set.
 
     \item Similarly, $\aset$ is the set of possible actions the agent can perform. The action at time $t$ is denoted by $\at{t}$, while $a$ denotes an element of the action set.
 
     \item $\rset$ is the set of possible rewards, defined as $\rsetdef$. Additionally, instantaneous reward at time $t$ is $\Rfun_t$. Elements of the reward set are denoted by $r$ while the infimum and supremum are $\rmin$ and $\rmax$ respectively.
 
-    \item $\Tdef$ is called the {\em transition function}. For all $(s,a,s',t) \in \sset \times \aset \times \sset \times \NZ$, let $\Tfun(s,a,s')\coloneqq\Pr(\st{t+1}=s' \mid \st{t}=s, \ActionT{t}=a)$.
+    \item $\Tdef$ is called the {\em transition function}. For all $(s,a,s',t) \in \sset \times \aset \times \sset \times \NZ$, let $\Tfun(s,a,s')\coloneqq\Pr(\st{t+1}=s' \mid \st{t}=s, \at{t}=a)$.
     That is, $\Tfun$ characterizes the distribution over states at time $t+1$ given the state and action at time $t$.
     We allow three alternate notations for $\Tfun$.
     \begin{enumerate}
@@ -113,7 +113,7 @@ The \gls{MDP} is then denoted by a tuple, $\MDP$, where;
     This form takes approximately the same amount of space, but makes it more clear that $\Tfun$ is a conditional distribution over the next state given the current state and action.
         \item {\tt beta}: $\Tfun_{s}^{a}(s') \coloneqq \Tfun(s,a,s')$.
     This notation moves terms into subscripts and superscripts in order to save some space.
-        \item {\tt kappa}: $\Tfun_{s,s'}^{a}} \coloneqq \Tfun(s,a,s')$.
+        \item {\tt kappa}: $\Tfun_{s,s'}^{a} \coloneqq \Tfun(s,a,s')$.
     This final form is particularly useful when space is limited.
     \end{enumerate}
     Once the author selects one the three notations modes, consistent within each paper is ensured automatically.
@@ -126,7 +126,7 @@ The \gls{MDP} is then denoted by a tuple, $\MDP$, where;
 \end{enumerate}
 %
 
-Further, $\pol$ is the policy which is defined as $\poldef$ ...
+Further, $\p$ is the policy which is defined as $\pdef$ ...
 
 
 \section{Acknowledgments}
